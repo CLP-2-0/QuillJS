@@ -32,8 +32,11 @@
             });
 
             $('#saveDelta').click(function () {
-                quill.setText('Hello\nWorld!\n');
-            });
+                var text = quill.getText(0, 10)
+                quill.updateContents(new Delta()
+                .retain({ bold: true})
+                );
+                        });
 
         </script>
     </body>
