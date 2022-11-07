@@ -6,13 +6,16 @@
             <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
             <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
     </head>
     <body>
         
         <div id="toolbar"></div>
         <div id="editor"></div>
+        <button id="save">Save</button>
+        <p id="savedContent"></p>
 
-        <button id="saveDelta">Save</button>
+
 
     <script>
 
@@ -29,7 +32,7 @@
             theme: 'snow'
         });
 
-        const button = document.getElementById("saveDelta");
+        const button = document.getElementById("save");
         button.addEventListener("click", (e) => {
             var ops = quill.getContents().ops;
 
@@ -40,6 +43,13 @@
                     return false;
                 }
             });
+
+            console.log(ops);
+            let bold_content = "";
+            for (let i = 0; i < ops.length; i++) {
+                bold_content += ops[i].insert;
+            }
+            document.getElementById("savedContent").innerHTML = bold_content;
             quill.setContents(ops);
         });
         </script>
