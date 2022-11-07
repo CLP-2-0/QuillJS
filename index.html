@@ -6,38 +6,42 @@
             <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
             <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
-
     </head>
     <body>
         
         <div id="toolbar"></div>
         <div id="editor"></div>
 
-        <button id="saveDelta">Save </button>
+        <button id="saveDelta">Save</button>
 
-        <script>
+    <script>
 
-            var toolbarOptions = [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote', 'code-block']
-            ];
+        var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block']
+        ];
 
-            var quill = new Quill('#editor', {
-                modules: {
-                    toolbar: toolbarOptions
-                },
+        var quill = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
 
-                theme: 'snow'
+            theme: 'snow'
+        });
+
+        const button = document.getElementById("saveDelta");
+        button.addEventListener("click", (e) => {
+            var ops = quill.getContents().ops;
+
+            ops = ops.filter((op) => {
+                if (op.attributes != null && op.attributes.bold == true) {
+                    return true;
+                } else {
+                    return false;
+                }
             });
-
-            $('#saveDelta').click(function () {
-                var text = quill.getText(0, 10)
-                quill.updateContents(new Delta()
-                .retain({ bold: true})
-                );
-                        });
-
+            quill.setContents(ops);
+        });
         </script>
     </body>
-</html>
+ </html>
